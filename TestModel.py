@@ -1,6 +1,5 @@
 import datetime
 from math import sqrt
-
 import mysql.connector
 import mysql.connector
 import numpy
@@ -103,9 +102,6 @@ class TestModel:
         scaler = MinMaxScaler(feature_range=(-1, 1))
         scaled = scaler.fit_transform(values)
         return scaled, scaler
-
-
-
 
     def plotting_save_experiment_data(self, model, inputs, y_actual, y_predicted):
         # plot history

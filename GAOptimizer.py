@@ -22,14 +22,15 @@ def Predict(solution, solution_idx=-1):
                                                            ga_instance.count, ga_instance.generations_completed)
     print("****** " + str(s))
 
-    ANN_arch = [int(solution[0]), int(solution[1]), int(solution[2]), int(solution[3]), int(solution[4]), int(solution[5])]
-    Forecasting = CombinedParametersForecasting.CombinedParametersForecasting(#Dropout=float(solution[7]),
-                                                              ANN_arch=ANN_arch,
-                                                              n_batch=int(solution[6]),
-                                                              comment="Genetic Optimizer combined model: " + s,
-                                                              model_train_verbose=0,
-                                                              n_epochs=1000, earlystop=True, optimizer='adam',
-                                                              outputIndex=outputIndex, ActivationFunctions='tanh')
+    ANN_arch = [int(solution[0]), int(solution[1]), int(solution[2]), int(solution[3]), int(solution[4]),
+                int(solution[5])]
+    Forecasting = CombinedParametersForecasting.CombinedParametersForecasting(  # Dropout=float(solution[7]),
+        ANN_arch=ANN_arch,
+        n_batch=int(solution[6]),
+        comment="Genetic Optimizer combined model: " + s,
+        model_train_verbose=0,
+        n_epochs=1000, earlystop=True, optimizer='adam',
+        outputIndex=outputIndex, ActivationFunctions='tanh')
     return Forecasting.start_experiment()
 
 
@@ -57,14 +58,14 @@ sol_per_pop = 20  # Number of solutions in the population.
 
 # init_range_low = -2
 # init_range_high = 5
-genes_range_dict = {"Layer1": [0,0, 32, 64, 256, 512],
-                    "Layer2": [0,0, 8, 32, 64, 256, 512],
-                    "Layer3": [0,0, 8, 32, 64, 256, 512],
-                    "Layer4": [0,0, 8, 32, 64, 256, 512],
-                    "Layer5": [0,0,8, 32, 64, 256, 512],
+genes_range_dict = {"Layer1": [0, 0, 32, 64, 256, 512],
+                    "Layer2": [0, 0, 8, 32, 64, 256, 512],
+                    "Layer3": [0, 0, 8, 32, 64, 256, 512],
+                    "Layer4": [0, 0, 8, 32, 64, 256, 512],
+                    "Layer5": [0, 0, 8, 32, 64, 256, 512],
                     "Layer6": [0, 0, 8, 32, 64, 256, 512],
                     "n_batch": [32, 128, 256]
-                   # "Dropout": [0, 0.2, 0.5, 0.8]
+                    # "Dropout": [0, 0.2, 0.5, 0.8]
                     # "ActivationFunctions": ['relu', 'tanh']
                     }
 
@@ -74,7 +75,7 @@ parent_selection_type = "sss"  # Type of parent selection.
 keep_parents = -1  # Number of parents to keep in the next population. -1 means keep all parents and 0 means keep nothing.
 
 # Type of the crossover operator.
-crossover_type="single_point"
+crossover_type = "single_point"
 # Parameters of the mutation operation.
 mutation_type = "random_dict"  # Type of the mutation operator.
 mutation_percent_genes = 20  # Percentage of genes to mutate. This parameter has no action if the parameter mutation_num_genes exists or when mutation_type is None.

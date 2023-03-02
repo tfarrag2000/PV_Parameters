@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="39280da8-0ebb-4772-87bc-fc5d0996e46d" name="Default Changelist" comment="V1.0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GAOptimizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/GAOptimizer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/TestModel.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,8 +45,10 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
   }
 }</component>
@@ -60,17 +64,18 @@
       <recent name="D:\OneDrive\My Research\LTLF\Kitchen\Program\Pics" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.testANN">
+  <component name="RunManager" selected="Python.Program">
     <configuration name="Program" type="PythonConfigurationType" factoryName="Python">
-      <module name="Program" />
+      <module name="The Code" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Users\tfarr\anaconda3\python.exe" />
+      <option name="SDK_NAME" value="C:\Users\tfarr\anaconda3" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Program.py" />
@@ -104,7 +109,7 @@
       <method v="2" />
     </configuration>
     <configuration name="TestModel" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Program" />
+      <module name="The Code" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -115,7 +120,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="D:\OneDrive\My Research\Dr_Mosaad\Data 3\TestModel.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Dr_Mosaad/Data 3/TestModel.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -146,18 +151,19 @@
       <method v="2" />
     </configuration>
     <configuration name="testANN" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Program" />
+      <module name="The Code" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\tfarr\Anaconda3\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\tfarr\anaconda3\python.exe" />
+      <option name="SDK_NAME" value="C:\Users\tfarr\anaconda3" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="D:\OneDrive\My Research\Dr_Mosaad\Data 3\testANN.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Dr_Mosaad/Data 3/testANN.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -187,6 +193,14 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.Program" />
+      <item itemvalue="Python.Proposal" />
+      <item itemvalue="Python.testANN" />
+      <item itemvalue="Python.TestModel" />
+      <item itemvalue="Python.TestModel_assesment" />
+      <item itemvalue="Python.testSVM" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.testANN" />
@@ -293,7 +307,21 @@
       <option name="project" value="LOCAL" />
       <updated>1637361701015</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="V1.0">
+      <created>1677574128214</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1677574128214</updated>
+    </task>
+    <task id="LOCAL-00015" summary="V1.0">
+      <created>1677574194024</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1677574194024</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -348,7 +376,8 @@
     <MESSAGE value="V7" />
     <MESSAGE value="V8.0" />
     <MESSAGE value="V9.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="V9.0" />
+    <MESSAGE value="V1.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="V1.0" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
