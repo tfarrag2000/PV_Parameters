@@ -1,10 +1,8 @@
 import datetime
 from math import sqrt
-
 import mysql.connector
-import mysql.connector
-import numpy
 import numpy as np
+import pandas as pd
 from keras.models import load_model
 from keras.utils import plot_model
 from matplotlib import pyplot
@@ -74,31 +72,32 @@ class TestModel:
         y_true, y_pred = np.array(y_true), np.array(y_pred)
         return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
 
-    def load_prepare_data(self):
-        # load dataset
-        dataset = read_csv('TheData/data_without_outliers.csv', header=0, index_col=0, parse_dates=True)
-        self.cols = ['Pm', 'Vm', 'Im', 'Voc', 'Isc', 'Voc_coeff', 'Isc_coeff', 'Rs', 'Iph', 'I0', 'Rp', 'n']
 
-        if (self.outputIndex != -1):
-            self.cols = ['Pm', 'Vm', 'Im', 'Voc', 'Isc', 'Voc_coeff', 'Isc_coeff', self.cols[6 + self.outputIndex]]
-            dataset = dataset[self.cols]
 
-        self.col_inputs = self.cols[0:7]
-        self.col_actual = [x + '_actual' for x in self.cols[7:]]
-        self.col_predicted = [x + '_predicted' for x in self.cols[7:]]
+    def load_prepare_data(self): # new version
+        # Load dataset
+        with open('TheData/data_without_outliers.csv') as f:
+            data = pd.read_csv(f, header=0, index_col=0, parse_dates=True)
 
-        ## remove outliers
-        # z_scores = zscore(dataset)
-        # abs_z_scores = np.abs(z_scores)
-        # filtered_entries = (abs_z_scores < 3).all(axis=1)
-        # dataset = dataset[filtered_entries]
+        # Define column names
+        cols = ['Pm', 'Vm', 'Im', 'Voc', 'Isc', 'Voc_coeff', 'Isc_coeff', 'Rs', 'Iph', 'I0', 'Rp', 'n']
 
-        values = dataset.values
-        # ensure all data is float
-        values = values.astype('float32')
-        # normalize features
+        # If outputIndex is specified, only use relevant columns
+        if self.outputIndex != -1:
+            output_col = cols[6 + self.outputIndex]
+            cols = ['Pm', 'Vm', 'Im', 'Voc', 'Isc', 'Voc_coeff', 'Isc_coeff', output_col]
+            data = data[cols]
+
+        # Split columns into inputs, actuals, and predictions
+        col_inputs = cols[0:7]
+        col_actual = [x + '_actual' for x in cols[7:]]
+        col_predicted = [x + '_predicted' for x in cols[7:]]
+
+        # Convert data to float and normalize
+        values = data.values.astype('float32')
         scaler = MinMaxScaler(feature_range=(-1, 1))
         scaled = scaler.fit_transform(values)
+
         return scaled, scaler
 
     def plotting_save_experiment_data(self, model, inputs, y_actual, y_predicted):
@@ -190,30 +189,33 @@ class TestModel:
 
             db.close()
 
-    def checkDataBase(self):
-
-        db = mysql.connector.connect(host="localhost", user="root", passwd="mansoura", db="dr_mosaad_data3")
-        # prepare a cursor object using cursor() method
-        cursor = db.cursor()
-
-        sql = "select experiment_ID, MAPE from experiments where ANN_arch='{}' and n_batch ={} and Dropout={}  and " \
-              "outputIndex={} and optimizer='{}' and ActivationFunctions='{}'" \
-            .format(self.ANN_arch_list, self.parameters["n_batch"], self.parameters["Dropout"], self.outputIndex,
-                    self.parameters["optimizer"], self.parameters["ActivationFunctions"])
-
+    def check_database(self):
         try:
-            cursor.execute(sql)
+            db = mysql.connector.connect(host="localhost", user="root", passwd="M@nsoura2000>", db="pv_db")
+            cursor = db.cursor()
+
+            sql = "SELECT experiment_ID, MAPE FROM experiments WHERE ANN_arch = %s AND n_batch = %s AND Dropout = %s AND outputIndex = %s AND optimizer = %s AND ActivationFunctions = %s"
+            values = (self.ANN_arch_list, self.parameters["n_batch"], self.parameters["Dropout"], self.outputIndex,
+                      self.parameters["optimizer"], self.parameters["ActivationFunctions"])
+
+            cursor.execute(sql, values)
             records = cursor.fetchall()
-            for row in records:
-                self.MAPE = row[1]
+            if records:
+                self.MAPE = records[0][1]
                 return True
-        except TypeError as e:
-            print(e)
+
+        except mysql.connector.Error as e:
+            print(f"Error connecting to database: {e}")
+
+        finally:
+            if db.is_connected():
+                cursor.close()
+                db.close()
 
         return False
 
     def Predict_From_model(self, data, scaler, model):
-        data = numpy.array(data)
+        data = np.array(data)
         inputs = data[:, :7]
         outputs = data[:, 7:]
 
@@ -222,7 +224,7 @@ class TestModel:
         y_test_predicted = model.predict([inputs for x in range(outputs.shape[1])])
         # y_test_predicted = model.predict(inputs)
 
-        uu = numpy.array(y_test_predicted).transpose()
+        uu = np.array(y_test_predicted).transpose()
         yy = uu.reshape((-1, outputs.shape[1]))
 
         # invert scaling for actual

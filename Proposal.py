@@ -1,7 +1,12 @@
-import numpy as np
+import datetime
 import os
-import uuid
 from math import sqrt
+
+import numpy as np
+from keras.callbacks import EarlyStopping
+from keras.layers import Dense, Dropout, LSTM
+from keras.models import Sequential
+from keras.utils import plot_model
 from matplotlib import pyplot
 from numpy import concatenate
 from pandas import DataFrame
@@ -10,12 +15,6 @@ from pandas import concat
 from pandas import read_csv
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import MinMaxScaler
-from tensorflow import keras
-from keras.callbacks import EarlyStopping
-from keras.layers import Dense, Dropout , LSTM, GRU
-from keras.models import Sequential
-from keras.utils import plot_model
-from keras import regularizers
 
 os.environ["PATH"] += os.pathsep + r'C:/Program Files (x86)/Graphviz2.38/bin/'
 
@@ -59,11 +58,9 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
 #     data.dropna(inplace=dropnan)
 #     return data
 
-
 def mean_absolute_percentage_error(y_true, y_pred):
     y_true, y_pred = np.array(y_true), np.array(y_pred)
     return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
-
 
 def load_prepare_data():
     # load dataset
@@ -213,26 +210,33 @@ def run_experiment():
 
 
 def main():
-    import datetime
+    """
+    Set up and run a machine learning experiment.
+    """
+    try:
+        now = datetime.datetime.now()
+        parameters = {
+            "ID": now.strftime("%Y%m%d%H%M"),
+            "n_days": 1,
+            "n_features": 4,
+            "n_traindays": 365 * 11,
+            "n_epochs": 50,
+            "n_batch": 128,
+            "n_neurons": 64,
+            "model_train_verbose": 2,
+            "earlystop": True,
+            "save_to_database": False
+        }
+        run_experiment(parameters)
+    except Exception as e:
+        print("Error running experiment:", e)
 
-    now = datetime.datetime.now()
-    parameters["ID"] = now.strftime("%Y%m%d%H%M")  # uuid.uuid4().hex
-    parameters["n_days"] = 1
-    parameters["n_features"] = 4
-    parameters["n_traindays"] = 365 * 11
-    parameters["n_epochs"] = 50
-    parameters["n_batch"] = 128
-    parameters["n_neurons"] = 64
-    parameters["model_train_verbose"] = 2
-    parameters["earlystop"] = True
-    parameters["save_to_database"] = False
+
+if __name__ == "__main__":
+    main()
 
     # https: // tensorflow.rstudio.com / blog / time - series - forecasting -
     # with-recurrent - neural - networks.html
 
-    run_experiment()
-    import gc
-    gc.collect()
-
-
-main()
+    # import gc
+    # gc.collect()
