@@ -2,7 +2,7 @@ from tensorflow import keras
 from tensorflow.python.keras.models import load_model
 
 list=['20200717100010']
-Dir = 'E:\\My Research Results\\Dr_Mosaad_Data3\\Models\\'
+Dir = 'D:\\My Research Results\\Dr_Mosaad_Data3\\Models\\'
 
 for f in list:
     fn=f + '_best_model.h5'

@@ -1,6 +1,5 @@
 import numpy as np
 import os
-import tensorflow as tf
 import uuid
 from math import sqrt
 from matplotlib import pyplot
@@ -12,14 +11,13 @@ from pandas import read_csv
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow import keras
-from tensorflow.keras import regularizers
-from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras.layers import Dense, Dropout
-from tensorflow.keras.layers import LSTM, GRU
-from tensorflow.keras.models import Sequential
+from keras.callbacks import EarlyStopping
+from keras.layers import Dense, Dropout , LSTM, GRU
+from keras.models import Sequential
+from keras.utils import plot_model
+from keras import regularizers
 
 os.environ["PATH"] += os.pathsep + r'C:/Program Files (x86)/Graphviz2.38/bin/'
-from tensorflow.keras.utils import plot_model
 
 # experiment parameters
 parameters = dict()
@@ -77,6 +75,7 @@ def load_prepare_data():
     values = values.astype('float32')
     # normalize features
     scaler = MinMaxScaler(feature_range=(-1, 1))
+
     scaled = scaler.fit_transform(values)
     # frame as supervised learning
     reframed = series_to_supervised(scaled, parameters["n_days"], 1, dropnan=True)
@@ -134,7 +133,7 @@ def plotting_save_experiment_data(model, history, y_actual, y_predicted):
     # save to database
     if parameters["save_to_database"]:
         import MySQLdb
-        db = MySQLdb.connect(host="localhost", user="tfarrag", passwd="mansoura", db="mydata")
+        db = MySQLdb.connect(host="localhost", user="root", passwd="M@nsoura2000", db="pv_db")
         # prepare a cursor object using cursor() method
         cursor = db.cursor()
         s = model.summary()
@@ -210,7 +209,6 @@ def create_fit_model(data, scaler):
 
 def run_experiment():
     data, scaler = load_prepare_data()
-
     create_fit_model(data, scaler)
 
 
@@ -219,7 +217,7 @@ def main():
 
     now = datetime.datetime.now()
     parameters["ID"] = now.strftime("%Y%m%d%H%M")  # uuid.uuid4().hex
-    parameters["n_days"] = 4
+    parameters["n_days"] = 1
     parameters["n_features"] = 4
     parameters["n_traindays"] = 365 * 11
     parameters["n_epochs"] = 50

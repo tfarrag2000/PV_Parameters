@@ -27,7 +27,7 @@ from tensorflow import keras
 # os.environ["PATH"] += os.pathsep + r'C:\Program Files (x86)\Graphviz2.38\bin'
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # experiment self.parameters
-mainDir = 'E:\\My Research Results\\Dr_Mosaad_Data3\\'
+mainDir = 'D:\\My Research Results\\Dr_Mosaad_Data3\\'
 
 
 class CombinedParametersForecasting:
@@ -84,7 +84,7 @@ class CombinedParametersForecasting:
 
     def CreateCombinedModel(self):
         list = ['20200726221917', '20200726140302', '20200726114513', '20200726051814', '20200726064251']
-        Dir = 'E:\\My Research Results\\Dr_Mosaad_Data3\\Models\\'
+        Dir = 'D:\\My Research Results\\Dr_Mosaad_Data3\\Models\\'
         models = []
         for f in list:
             fn = f + '_best_model.h5'
@@ -116,7 +116,7 @@ class CombinedParametersForecasting:
 
         model = keras.Model(inputs=[f.input for f in models], outputs=output)
         # summarize layers
-        plot_model(model, to_file='E:\\multiple_inputsxxxxx.png')
+        plot_model(model, to_file='D:\\multiple_inputsxxxxx.png')
         return model
 
     def mean_absolute_percentage_error(self, y_true, y_pred):

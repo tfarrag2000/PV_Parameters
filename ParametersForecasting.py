@@ -28,7 +28,7 @@ from tensorflow.keras.utils import plot_model
 # os.environ["PATH"] += os.pathsep + r'C:\Program Files (x86)\Graphviz2.38\bin'
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # experiment self.parameters
-mainDir = 'E:\\My Research Results\\Dr_Mosaad_Data3\\'
+mainDir = 'D:\\My Research Results\\Dr_Mosaad_Data3\\'
 
 
 class ParametersForecasting:

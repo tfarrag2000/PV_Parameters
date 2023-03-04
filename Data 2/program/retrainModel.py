@@ -57,7 +57,7 @@ print("---------------- Test Y  --------------------")
 print(testY)
 
 
-model = load_model('E:\\My Research Results\\Dr_Mosaad_Data2\\Models\\Model8_filters_2_dense_1_denseSize_32_Dropout_0.4_20191029-232731_resume_Training_best_model.h5')
+model = load_model('D:\\My Research Results\\Dr_Mosaad_Data2\\Models\\Model8_filters_2_dense_1_denseSize_32_Dropout_0.4_20191029-232731_resume_Training_best_model.h5')
 Name = 'Model8_filters_2_dense_1_denseSize_32_Dropout_0.4_20191029-232731_resume_Training2_' +datetime.now().strftime("%Y%m%d-%H%M%S")
 
 print("##############################################")
@@ -66,7 +66,7 @@ print("##############################################")
 
 clbs = None
 earlyStopping = EarlyStopping(monitor='val_loss', patience=15, verbose=2, mode='auto')
-mc = ModelCheckpoint('E:\\My Research Results\\Dr_Mosaad_Data2\\Models\\' + Name + '_best_model.h5', monitor='val_loss', mode='auto', verbose=1,
+mc = ModelCheckpoint('D:\\My Research Results\\Dr_Mosaad_Data2\\Models\\' + Name + '_best_model.h5', monitor='val_loss', mode='auto', verbose=1,
                      save_best_only=True)
 
 def scheduler(epoch):
@@ -79,9 +79,9 @@ def scheduler(epoch):
 LRS = LearningRateScheduler(scheduler,verbose=1)
 
 # tensorboard
-logdir = "E:\\My Research Results\\Dr_Mosaad_Data2\\logs\\scalars\\" + Name
+logdir = "D:\\My Research Results\\Dr_Mosaad_Data2\\logs\\scalars\\" + Name
 tensorboard_callback = TensorBoard(log_dir=logdir)
-csv_clb=CSVLogger("E:\\My Research Results\\Dr_Mosaad_Data2\\History"+Name+".csv", append=True)
+csv_clb=CSVLogger("D:\\My Research Results\\Dr_Mosaad_Data2\\History"+Name+".csv", append=True)
 
 clbs = [earlyStopping, mc, tensorboard_callback,csv_clb]
 
@@ -95,17 +95,17 @@ history = model.fit(np.array(trainImagesX), np.array(trainY),
                     verbose=2
                     , callbacks=clbs)
 
-model.save('E:\\My Research Results\\Dr_Mosaad_Data2\\Models\\' + Name + '_Last_model.h5')
+model.save('D:\\My Research Results\\Dr_Mosaad_Data2\\Models\\' + Name + '_Last_model.h5')
 # plot history loss
 pyplot.close()
 pyplot.plot(history.history['loss'], label='train_loss')
 pyplot.plot(history.history['val_loss'], label='test_loss')
 # pyplot.plot(history.history['val_mean_absolute_percentage_error'], label='MAPE')
 pyplot.legend()
-pyplot.savefig('E:\\My Research Results\\Dr_Mosaad_Data2\\experimentOutput\\' + Name + "_loss_fig.png")
+pyplot.savefig('D:\\My Research Results\\Dr_Mosaad_Data2\\experimentOutput\\' + Name + "_loss_fig.png")
 pyplot.close()
 
-model = load_model('E:\\My Research Results\\Dr_Mosaad_Data2\\Models\\' + Name + '_best_model.h5')
+model = load_model('D:\\My Research Results\\Dr_Mosaad_Data2\\Models\\' + Name + '_best_model.h5')
 
 
 # make predictions on the testing data

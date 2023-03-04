@@ -16,13 +16,13 @@ from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow import keras
-from tensorflow.keras.models import load_model
-from tensorflow.keras.utils import plot_model
+from keras.models import load_model
+from keras.utils import plot_model
 
 # os.environ["PATH"] += os.pathsep + r'C:\Program Files (x86)\Graphviz2.38\bin'
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # experiment self.parameters
-mainDir = 'E:\\My Research Results\\Dr_Mosaad_Data3\\'
+mainDir = 'D:\\My Research Results\\Dr_Mosaad_Data3\\'
 
 
 class TestModel:
@@ -170,7 +170,7 @@ class TestModel:
     def CreateModel(self):
         list = ['20200726221917', '20200820003813', '20200726114513', '20200726051814', '20200726064251']
         # list = ['20200820003813']
-        Dir = 'E:\\My Research Results\\Dr_Mosaad_Data3\\Models\\'
+        Dir = 'D:\\My Research Results\\Dr_Mosaad_Data3\\Models\\'
         models = []
         for f in list:
             fn = f + '_best_model.h5'
@@ -184,7 +184,7 @@ class TestModel:
         # merge = keras.layers.concatenate(outModules)
         model = keras.Model(inputs=[f.input for f in models], outputs=outModules)
         # summarize layers
-        plot_model(model, to_file='E:\\kkkk.png')
+        plot_model(model, to_file='D:\\kkkk.png')
         return model
 
     def start_experiment(self):

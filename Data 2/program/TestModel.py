@@ -55,7 +55,7 @@ print("---------------- Test Y  --------------------")
 print(testY)
 
 
-model = load_model('E:\\My Research Results\\Dr_Mosaad_Data2\\Models\\Model8_filters_2_dense_1_denseSize_32_Dropout_0.4_20191029-232731_resume_Training_best_model.h5')
+model = load_model('D:\\My Research Results\\Dr_Mosaad_Data2\\Models\\Model8_filters_2_dense_1_denseSize_32_Dropout_0.4_20191029-232731_resume_Training_best_model.h5')
 
 # make predictions on the testing data
 print("[INFO] predicting .............")
