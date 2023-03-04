@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="39280da8-0ebb-4772-87bc-fc5d0996e46d" name="Default Changelist" comment="V1.2">
-      <change afterPath="$PROJECT_DIR$/GAOptimizer_ChatGPT.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Proposal.py" beforeDir="false" afterPath="$PROJECT_DIR$/Proposal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/TestModel.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +154,7 @@
       <updated>1550235745330</updated>
       <workItem from="1677736953051" duration="2236000" />
       <workItem from="1677912198775" duration="906000" />
-      <workItem from="1677913125816" duration="8756000" />
+      <workItem from="1677913125816" duration="12734000" />
     </task>
     <task id="LOCAL-00001" summary="new updates">
       <created>1550597556155</created>
@@ -284,7 +282,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677919592428</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="V1.2">
+      <created>1677923571264</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1677923571264</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -413,6 +418,11 @@
           <line>216</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Proposal.py</url>
+          <line>333</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -430,7 +440,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/The_Code$Proposal.coverage" NAME="Proposal Coverage Results" MODIFIED="1677914455359" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/The_Code$Proposal.coverage" NAME="Proposal Coverage Results" MODIFIED="1677950383601" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/The_Code$PrepareData.coverage" NAME="PrepareData Coverage Results" MODIFIED="1677737639600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/The_Code$Program.coverage" NAME="Program Coverage Results" MODIFIED="1677737507123" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
