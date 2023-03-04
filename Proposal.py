@@ -67,7 +67,7 @@ def mean_absolute_percentage_error(y_true, y_pred):
 
 def load_prepare_data():
     # load dataset
-    dataset = read_csv('Load.csv', header=0, index_col=0, parse_dates=True)
+    dataset = read_csv('TheData/Load.csv', header=0, index_col=0, parse_dates=True)
 
     values = dataset.values
     print(dataset)

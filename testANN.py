@@ -57,7 +57,7 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
 
 def load_prepare_data():
     # load dataset
-    dataset = read_csv('Load.csv', header=0, index_col=0, parse_dates=True)
+    dataset = read_csv('TheData/Load.csv', header=0, index_col=0, parse_dates=True)
     pp = parameters
     values = dataset.values
     print(dataset)

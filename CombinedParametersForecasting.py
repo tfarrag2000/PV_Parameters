@@ -125,7 +125,7 @@ class CombinedParametersForecasting:
 
     def load_prepare_data(self):
         # load dataset
-        dataset = read_csv('data_without_outliers.csv', header=0, index_col=0, parse_dates=True)
+        dataset = read_csv('TheData/data_without_outliers.csv', header=0, index_col=0, parse_dates=True)
 
         self.cols = ['Pm', 'Vm', 'Im', 'Voc', 'Isc', 'Voc_coeff', 'Isc_coeff', 'Rs', 'Iph', 'I0', 'Rp', 'n']
         if (self.outputIndex != -1):

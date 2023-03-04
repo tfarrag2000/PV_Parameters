@@ -67,7 +67,7 @@ class TestModel:
 
     def load_prepare_data_assesment(self):
         # prepare scalar
-        dataset = read_csv('data_without_outliers.csv', header=0, index_col=0, parse_dates=True)
+        dataset = read_csv('TheData/data_without_outliers.csv', header=0, index_col=0, parse_dates=True)
 
         self.cols = ['Pm', 'Vm', 'Im', 'Voc', 'Isc', 'Voc_coeff', 'Isc_coeff', 'Rs', 'Iph', 'I0', 'Rp', 'n']
         dataset = dataset[self.cols]
@@ -85,7 +85,7 @@ class TestModel:
         # scalerOutputs= load(open(mainDir + 'Models\\' + '20200820003813' + '_scalerOutputs.pkl', 'rb'))
 
         # load dataset
-        dataset = read_csv('PVs for assessments.csv', header=0, index_col=0, parse_dates=True)
+        dataset = read_csv('TheData/PVs for assessments.csv', header=0, index_col=0, parse_dates=True)
         self.cols = ['Pm', 'Vm', 'Im', 'Voc', 'Isc', 'Voc_coeff', 'Isc_coeff', 'Rs', 'Iph', 'I0', 'Rp', 'n']
         # self.cols = ['Pm', 'Vm', 'Im', 'Voc', 'Isc', 'Voc_coeff', 'Isc_coeff', 'Iph']
 

@@ -8,7 +8,7 @@ from pandas import read_csv
 #     return datetime.strptime(x, '%Y %m %d')
 
 
-dataset = read_csv(r'.\Data\alldata.csv', delimiter=';', header=0)
+dataset = read_csv(r'TheData/Data\alldata.csv', delimiter=';', header=0)
 
 # print(dataset.columns.values.tolist())
 # dataset = dataset[['MaxLoad']]  ### , 'max_temp', 'min_temp', 'weekday','Month'

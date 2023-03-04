@@ -1,6 +1,6 @@
 import datetime
 from math import sqrt
-from tensorflow import keras
+
 import mysql.connector
 import mysql.connector
 import numpy
@@ -14,6 +14,7 @@ from pandas import ExcelWriter
 from pandas import read_csv
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import MinMaxScaler
+from tensorflow import keras
 
 # os.environ["PATH"] += os.pathsep + r'C:\Program Files (x86)\Graphviz2.38\bin'
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -64,10 +65,8 @@ class TestModel:
         self.parameters["save_to_database"] = save_to_database
         self.parameters["optimizer"] = optimizer
         self.parameters["ANN_arch"] = ANN_arch
-        self.parameters["comment"] = comment
-
+        self.parameters["comment"]= comment
         self.parameters["ActivationFunctions"] = ActivationFunctions
-
         self.outputIndex = outputIndex
         # convert series to supervised learning
 
@@ -77,9 +76,9 @@ class TestModel:
 
     def load_prepare_data(self):
         # load dataset
-        dataset = read_csv('data_without_outliers.csv', header=0, index_col=0, parse_dates=True)
-
+        dataset = read_csv('TheData/data_without_outliers.csv', header=0, index_col=0, parse_dates=True)
         self.cols = ['Pm', 'Vm', 'Im', 'Voc', 'Isc', 'Voc_coeff', 'Isc_coeff', 'Rs', 'Iph', 'I0', 'Rp', 'n']
+
         if (self.outputIndex != -1):
             self.cols = ['Pm', 'Vm', 'Im', 'Voc', 'Isc', 'Voc_coeff', 'Isc_coeff', self.cols[6 + self.outputIndex]]
             dataset = dataset[self.cols]
@@ -261,7 +260,6 @@ class TestModel:
         return model
 
     def start_experiment(self):
-
         model = self.CreateModel()
         # model = load_model(mainDir + 'Models\\' + '20200726060320' + '_best_model.h5')
         data, scaler = self.load_prepare_data()
