@@ -1,6 +1,6 @@
 import datetime
 from math import sqrt
-
+from tensorflow import keras
 import mysql.connector
 import mysql.connector
 import numpy
@@ -14,7 +14,6 @@ from pandas import ExcelWriter
 from pandas import read_csv
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import MinMaxScaler
-from tensorflow import keras
 
 # os.environ["PATH"] += os.pathsep + r'C:\Program Files (x86)\Graphviz2.38\bin'
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
