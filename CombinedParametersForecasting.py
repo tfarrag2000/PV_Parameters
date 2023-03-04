@@ -1,6 +1,6 @@
 import datetime
 from math import sqrt
-
+from tensorflow import keras
 import mysql.connector
 import mysql.connector
 import numpy
@@ -15,12 +15,12 @@ from sklearn.metrics import mean_squared_error
 from sklearn.metrics import median_absolute_error
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
-from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras.callbacks import ModelCheckpoint
-from tensorflow.keras.callbacks import TensorBoard
-from tensorflow.keras.models import Dense ,Dropout
-from tensorflow.keras.models import load_model
-from tensorflow.keras.utils import plot_model
+from keras.callbacks import EarlyStopping
+from keras.callbacks import ModelCheckpoint
+from keras.callbacks import TensorBoard
+from keras.models import Dense ,Dropout
+from keras.models import load_model
+from keras.utils import plot_model
 from tensorflow import keras
 
 

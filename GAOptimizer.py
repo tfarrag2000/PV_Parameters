@@ -1,8 +1,7 @@
 import numpy
 
-import ParametersForecasting
 import CombinedParametersForecasting
-import pygad_modified
+from helpingclasses import pygad_modified
 
 """
 Given the following function:

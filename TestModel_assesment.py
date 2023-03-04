@@ -2,7 +2,6 @@ import datetime
 import os
 from math import sqrt
 from pickle import dump, load
-
 import mysql.connector
 import mysql.connector
 import numpy
