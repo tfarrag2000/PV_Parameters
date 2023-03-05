@@ -131,7 +131,7 @@ def load_prepare_data(parameters):
 
     scaled = scaler.fit_transform(values)
     # frame as supervised learning
-    reframed = series_to_supervised(scaled, parameters["n_days"], 1, dropnan=True)
+    reframed = series_to_supervised(scaled, parameters["n_days"], 5, dropnan=True)
 
     return reframed, scaler
 
@@ -362,7 +362,7 @@ def main():
         parameters = {
             "ID": now.strftime("%Y%m%d%H%M"),
             "n_days": 1,
-            "n_features": 4,
+            "n_features": 7,
             "n_traindays": 365 * 11,
             "n_epochs": 50,
             "n_batch": 128,

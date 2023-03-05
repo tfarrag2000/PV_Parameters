@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="39280da8-0ebb-4772-87bc-fc5d0996e46d" name="Default Changelist" comment="V1.2">
+    <list default="true" id="39280da8-0ebb-4772-87bc-fc5d0996e46d" name="Default Changelist" comment="V2.0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Proposal.py" beforeDir="false" afterPath="$PROJECT_DIR$/Proposal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/TestModel.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +155,7 @@
       <updated>1550235745330</updated>
       <workItem from="1677736953051" duration="2236000" />
       <workItem from="1677912198775" duration="906000" />
-      <workItem from="1677913125816" duration="12734000" />
+      <workItem from="1677913125816" duration="16385000" />
     </task>
     <task id="LOCAL-00001" summary="new updates">
       <created>1550597556155</created>
@@ -289,7 +290,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677923571264</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="V2.0">
+      <created>1677950623265</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1677950623265</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -349,7 +357,8 @@
     <MESSAGE value="V9.0" />
     <MESSAGE value="V1.0" />
     <MESSAGE value="V1.2" />
-    <option name="LAST_COMMIT_MESSAGE" value="V1.2" />
+    <MESSAGE value="V2.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="V2.0" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -414,14 +423,19 @@
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TestModel.py</url>
-          <line>216</line>
-          <option name="timeStamp" value="42" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Proposal.py</url>
           <line>333</line>
           <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Proposal.py</url>
+          <line>307</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Proposal.py</url>
+          <line>125</line>
+          <option name="timeStamp" value="47" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -440,7 +454,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/The_Code$Proposal.coverage" NAME="Proposal Coverage Results" MODIFIED="1677950383601" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/The_Code$Proposal.coverage" NAME="Proposal Coverage Results" MODIFIED="1677952260620" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/The_Code$PrepareData.coverage" NAME="PrepareData Coverage Results" MODIFIED="1677737639600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/The_Code$Program.coverage" NAME="Program Coverage Results" MODIFIED="1677737507123" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

@@ -72,8 +72,6 @@ class TestModel:
         y_true, y_pred = np.array(y_true), np.array(y_pred)
         return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
 
-
-
     def load_prepare_data(self): # new version
         # Load dataset
         with open('TheData/data_without_outliers.csv') as f:
