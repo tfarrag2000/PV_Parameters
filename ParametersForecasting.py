@@ -1,8 +1,9 @@
 import datetime
+import json
 from math import sqrt
+import os
 from pickle import dump, load
 
-import mysql.connector
 import mysql.connector
 import numpy
 import numpy as np
@@ -17,19 +18,13 @@ from sklearn.metrics import median_absolute_error
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow import keras
-from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras.callbacks import ModelCheckpoint
-from tensorflow.keras.callbacks import TensorBoard
-from tensorflow.keras.layers import Dense, Dropout
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.models import load_model
-from tensorflow.keras.utils import plot_model
+from keras.callbacks import EarlyStopping ,ModelCheckpoint,TensorBoard
+from keras.layers import Dense, Dropout
+from keras.models import load_model,Sequential
+from keras.utils import plot_model
 
-# os.environ["PATH"] += os.pathsep + r'C:\Program Files (x86)\Graphviz2.38\bin'
-# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-# experiment self.parameters
-mainDir = 'D:\\My Research Results\\Dr_Mosaad_Data3\\'
 
+mainDir = os.path.dirname(os.path.abspath(__file__))
 
 class ParametersForecasting:
     parameters = dict()
@@ -84,12 +79,21 @@ class ParametersForecasting:
         # convert series to supervised learning
 
     def mean_absolute_percentage_error(self, y_true, y_pred):
-        y_true, y_pred = np.array(y_true), np.array(y_pred)
-        return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
+        # Ensure that denominators are not zero
+        non_zero_denominators = np.where(y_true != 0)
+        
+        # Calculate absolute percentage errors only for non-zero denominators
+        absolute_percentage_errors = np.abs((y_true[non_zero_denominators] - y_pred[non_zero_denominators]) / y_true[non_zero_denominators])
+        
+        # Calculate the mean MAPE for non-zero denominators
+        mean_mape = np.mean(absolute_percentage_errors) * 100
+        
+        return mean_mape
 
     def load_prepare_data(self):
         # load dataset
-        dataset = read_csv('TheData/data_without_outliers.csv', header=0, index_col=0, parse_dates=True)
+        path=os.path.join(mainDir,'TheData\\data_without_outliers.csv')
+        dataset = read_csv(path, header=0, index_col=0, parse_dates=True)
 
         self.cols = ['Pm', 'Vm', 'Im', 'Voc', 'Isc', 'Voc_coeff', 'Isc_coeff', 'Rs', 'Iph', 'I0', 'Rp', 'n']
         if (self.outputIndex != -1):
@@ -120,14 +124,14 @@ class ParametersForecasting:
         scalerOutputs.fit(valuesOutputs)
         scaledInputs = scalerInputs.transform(valuesInputs)
         scaledOutputs = scalerOutputs.transform(valuesOutputs)
-        dump(scalerInputs, open(mainDir + 'Models\\' + self.parameters["ID"] + '_scalerInputs.pkl', 'wb'))
-        dump(scalerOutputs, open(mainDir + 'Models\\' + self.parameters["ID"] + '_scalerOutputs.pkl', 'wb'))
+        dump(scalerInputs, open(mainDir + 'results\\Models\\' + self.parameters["ID"] + '_scalerInputs.pkl', 'wb'))
+        dump(scalerOutputs, open(mainDir + 'results\\Models\\' + self.parameters["ID"] + '_scalerOutputs.pkl', 'wb'))
 
         return scaledInputs, scaledOutputs, scalerInputs, scalerOutputs
 
     def plotting_save_experiment_data(self, model, history, actual_inputs, actual_outputs, predicted_outputs):
         # plot history
-        plot_model(model, to_file=mainDir + 'experimentOutput\\' + self.parameters["ID"] + 'model_fig.png'
+        plot_model(model, to_file=mainDir + 'results\\experimentOutput\\' + self.parameters["ID"] + 'model_fig.png'
                    , show_shapes=False, show_layer_names=True,
                    rankdir='TB', expand_nested=False, dpi=96)
 
@@ -137,12 +141,12 @@ class ParametersForecasting:
         print("******************************************")
         print(actual_outputs.shape, predicted_outputs.shape)
         # save data to excel file
-        writer = ExcelWriter(mainDir + 'experimentOutput\\' + self.parameters["ID"] + 'results.xlsx')
+        writer = ExcelWriter(mainDir + '\\experimentOutput\\' + self.parameters["ID"] + 'results.xlsx')
         df = DataFrame.from_dict(self.parameters, orient='index')
         df.columns = ['value']
         df.to_excel(writer, 'self.parameters')
 
-        writer = ExcelWriter(mainDir + 'experimentOutput\\' + self.parameters["ID"] + 'results.xlsx')
+        writer = ExcelWriter(mainDir + '\\experimentOutput\\' + self.parameters["ID"] + 'results.xlsx')
         df = DataFrame.from_dict(self.parameters, orient='index')
         df.columns = ['value']
         df.to_excel(writer, 'self.parameters')
@@ -167,7 +171,7 @@ class ParametersForecasting:
         pyplot.plot(history.history['val_loss'], label='test_loss')
         # pyplot.plot(history.history['val_mean_absolute_percentage_error'], label='MAPE')
         pyplot.legend()
-        pyplot.savefig(mainDir + 'experimentOutput\\' + self.parameters["ID"] + "loss_fig.png")
+        pyplot.savefig(mainDir + '\\experimentOutput\\' + self.parameters["ID"] + "loss_fig.png")
         pyplot.close()
         # calculate RMSE
         mse = mean_squared_error(actual_outputs, predicted_outputs, multioutput='raw_values')
@@ -194,7 +198,7 @@ class ParametersForecasting:
         print('min train_loss: %.5f' % min_train_loss)
         print('min val_loss: %.5f' % min_val_loss)
 
-        writer.save()
+        # writer.save()
         writer.close()
 
         # plot and save actual vs predicted
@@ -205,12 +209,25 @@ class ParametersForecasting:
         pyplot.title('RMSE: %.3f' % rmse + " , " + 'MAPE: %.3f' % MAPE)
         figure = pyplot.gcf()
         figure.set_size_inches(16, 7)
-        pyplot.savefig(mainDir + 'experimentOutput\\' + self.parameters["ID"] + "forcast_fig.png")
+        pyplot.savefig(mainDir + '\\experimentOutput\\' + self.parameters["ID"] + "forcast_fig.png")
         pyplot.close()
 
         # save to database
         if self.parameters["save_to_database"]:
-            db = mysql.connector.connect(host="localhost", user="root", passwd="mansoura", db="dr_mosaad_data3")
+
+            # Load database connection details from the configuration file
+            with open(mainDir + '\\config.json', 'r') as config_file:
+                config = json.load(config_file)
+
+            # Extract database connection parameters
+            db_host = config['database']['host']
+            db_user = config['database']['user']
+            db_password = config['database']['password']
+            db_name = config['database']['database_name']
+
+            # Establish a database connection
+            db = mysql.connector.connect(host=db_host, user=db_user, passwd=db_password, db=db_name)
+
             # prepare a cursor object using cursor() method
             cursor = db.cursor()
 
@@ -243,7 +260,17 @@ class ParametersForecasting:
 
     def checkDataBase(self):
 
-        db = mysql.connector.connect(host="localhost", user="root", passwd="mansoura", db="dr_mosaad_data3")
+        # Load database connection details from the configuration file
+        with open(mainDir + '\\config.json', 'r') as config_file:
+            config = json.load(config_file)
+        # Extract database connection parameters
+        db_host = config['database']['host']
+        db_user = config['database']['user']
+        db_password = config['database']['password']
+        db_name = config['database']['database_name']
+
+        # Establish a database connection
+        db = mysql.connector.connect(host=db_host, user=db_user, passwd=db_password, db=db_name)
         # prepare a cursor object using cursor() method
         cursor = db.cursor()
 
@@ -267,14 +294,16 @@ class ParametersForecasting:
         inputs = numpy.array(scaledInputs)
         outputs = numpy.array(scaledOutputs)
 
+
         # split into train and test sets
         X_train, X_test, y_train, y_test = train_test_split(inputs, outputs, test_size=0.2, random_state=10)
-        print(X_train.shape, y_train.shape, X_test.shape, y_test.shape)
+
 
         #############################Create The The Model########################################
         if self.model is None and self.parameters["ANN_arch"] is not None:
 
-            inputs = keras.Input(shape=X_train.shape)
+            inputs = keras.Input(shape=(7,))
+
             layer_pre = inputs
 
             for n in self.parameters["ANN_arch"]:
@@ -314,17 +343,24 @@ class ParametersForecasting:
         self.model.compile(loss='mean_squared_error', optimizer=self.parameters["optimizer"])
 
         # callbacks
-        mc = ModelCheckpoint(mainDir + 'Models\\' + self.parameters["ID"] + '_best_model.h5',
+        mc = ModelCheckpoint(mainDir + 'results\\Models\\' + self.parameters["ID"] + '_best_model.h5',
                              monitor='val_loss', mode='auto', verbose=1, save_best_only=True)
-        logdir = mainDir + 'logs\\scalars\\' + self.parameters["ID"]
+        logdir = mainDir + 'results\\logs\\scalars\\' + self.parameters["ID"]
         print(logdir)
         tensorboard_callback = TensorBoard(log_dir=logdir, histogram_freq=1)
         clbs = [mc, tensorboard_callback]
         if self.parameters["earlystop"]:
-            earlyStopping = EarlyStopping(monitor='val_loss', patience=20, verbose=2, mode='auto')
+            earlyStopping = EarlyStopping(monitor='val_loss', patience=50, verbose=2, mode='auto')
             clbs.append(earlyStopping)
 
         # fit network
+
+        print("X_train shape:", X_train.shape)
+        print("y_train shape:", y_train.shape)
+        print("X_test shape:", X_test.shape)
+        print("y_test shape:", y_test.shape)
+        print("Model Input Layer Shape:", self.model.layers[0].input_shape)
+
         history = self.model.fit(X_train, y=y_train, epochs=self.parameters["n_epochs"],
                                  batch_size=self.parameters["n_batch"],
                                  validation_data=(X_test, y_test), verbose=self.parameters["model_train_verbose"],
@@ -332,9 +368,9 @@ class ParametersForecasting:
 
         self.parameters["n_epochs"] = len(history.history["loss"])
 
-        self.model.save(mainDir + 'Models\\' + self.parameters["ID"] + '_Last_model.h5')
+        # self.model.save(mainDir + '\\Models\\' + self.parameters["ID"] + '_Last_model.h5')
 
-        self.model = load_model(mainDir + 'Models\\' + self.parameters["ID"] + '_best_model.h5')
+        self.model = load_model(mainDir + 'results\\Models\\' + self.parameters["ID"] + '_best_model.h5')
 
         # make a prediction
         y_test_predicted = self.model.predict(X_test)
@@ -352,15 +388,14 @@ class ParametersForecasting:
 
     def start_experiment(self):
         scaledInputs, scaledOutputs, scalerInputs, scalerOutputs = self.load_prepare_data()
+
+        print("Scaled Inputs shape:", scaledInputs.shape)
+        print("Scaled Outputs shape:", scaledOutputs.shape)
+
         self.create_fit_model(scaledInputs, scaledOutputs, scalerInputs, scalerOutputs)
         return self.MAPE
 
-
-# 1 ID:
-# 3 ID:20200716152827
-# 5 ID:20200717031433
-# #
-# # model = load_model(mainDir + 'Models\\' + '20200717031433' + '_best_model.h5')
-f = ParametersForecasting(n_epochs=1999, n_batch=256, ANN_arch=[512, 64, 8, 8], save_to_database=True, outputIndex=2,
-                          comment="test" ,ActivationFunctions='linear' )
-f.start_experiment()
+if __name__ == "__main__":
+    f = ParametersForecasting(n_epochs=500, n_batch=256, ANN_arch=[32, 64, 256, 256, 5], model_train_verbose=1,save_to_database=True, outputIndex=-1,
+                            comment="test" ,ActivationFunctions='tanh' )
+    f.start_experiment()

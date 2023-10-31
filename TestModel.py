@@ -1,5 +1,6 @@
 import datetime
 from math import sqrt
+import os
 import mysql.connector
 import numpy as np
 import pandas as pd
@@ -17,7 +18,7 @@ from tensorflow import keras
 # os.environ["PATH"] += os.pathsep + r'C:\Program Files (x86)\Graphviz2.38\bin'
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # experiment self.parameters
-mainDir = 'D:\\My Research Results\\Dr_Mosaad_Data3\\'
+mainDir = os.path.dirname(os.path.abspath(__file__))  # Gets the directory where the script is located
 
 
 class TestModel:
@@ -100,13 +101,13 @@ class TestModel:
 
     def plotting_save_experiment_data(self, model, inputs, y_actual, y_predicted):
         # plot history
-        plot_model(model, to_file=mainDir + 'experimentOutput\\' + self.parameters["ID"] + 'model_fig.png'
+        plot_model(model, to_file=mainDir + '\\experimentOutput\\' + self.parameters["ID"] + 'model_fig.png'
                    , show_shapes=False, show_layer_names=True,
                    rankdir='TB', expand_nested=False, dpi=96)
 
         # print(model.summary())
         # save data to excel file
-        writer = ExcelWriter(mainDir + 'experimentOutput\\' + self.parameters["ID"] + 'results.xlsx')
+        writer = ExcelWriter(mainDir + '\\experimentOutput\\' + self.parameters["ID"] + 'results.xlsx')
         df = DataFrame.from_dict(self.parameters, orient='index')
         df.columns = ['value']
         df.to_excel(writer, 'self.parameters')
@@ -156,12 +157,12 @@ class TestModel:
         pyplot.title('RMSE: %.3f' % rmse + " , " + 'MAPE: %.3f' % MAPE)
         figure = pyplot.gcf()
         figure.set_size_inches(16, 7)
-        pyplot.savefig(mainDir + 'experimentOutput\\' + self.parameters["ID"] + "forcast_fig.png")
+        pyplot.savefig(mainDir + '\\experimentOutput\\' + self.parameters["ID"] + "forcast_fig.png")
         pyplot.close()
 
         # save to database
         if self.parameters["save_to_database"]:
-            db = mysql.connector.connect(host="localhost", user="root", passwd="mansoura", db="dr_mosaad_data3")
+            db = mysql.connector.connect(host="localhost", user="root", passwd="******", db="myData")
             # prepare a cursor object using cursor() method
             cursor = db.cursor()
 
@@ -242,7 +243,7 @@ class TestModel:
 
     def CreateModel(self):
         list = ['20200726221917', '20200726140302', '20200726114513', '20200726051814', '20200726064251']
-        Dir = 'D:\\My Research Results\\Dr_Mosaad_Data3\\Models\\'
+        Dir = os.path.dirname(os.path.abspath(__file__), 'Results\\Models\\')        
         models = []
         for f in list:
             fn = f + '_best_model.h5'
@@ -261,7 +262,7 @@ class TestModel:
 
     def start_experiment(self):
         model = self.CreateModel()
-        # model = load_model(mainDir + 'Models\\' + '20200726060320' + '_best_model.h5')
+        # model = load_model(mainDir + '\\Models\\' + '20200726060320' + '_best_model.h5')
         data, scaler = self.load_prepare_data()
         self.Predict_From_model(data, scaler, model)
         return self.MAPE

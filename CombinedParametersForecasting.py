@@ -1,5 +1,6 @@
 import datetime
 from math import sqrt
+import os
 from tensorflow import keras
 import mysql.connector
 import mysql.connector
@@ -18,7 +19,7 @@ from sklearn.preprocessing import MinMaxScaler
 from keras.callbacks import EarlyStopping
 from keras.callbacks import ModelCheckpoint
 from keras.callbacks import TensorBoard
-from keras.models import Dense ,Dropout
+from keras.layers import Dense, Dropout, LSTM
 from keras.models import load_model
 from keras.utils import plot_model
 from tensorflow import keras
@@ -27,7 +28,7 @@ from tensorflow import keras
 # os.environ["PATH"] += os.pathsep + r'C:\Program Files (x86)\Graphviz2.38\bin'
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # experiment self.parameters
-mainDir = 'D:\\My Research Results\\Dr_Mosaad_Data3\\'
+mainDir = os.path.dirname(os.path.abspath(__file__))
 
 
 class CombinedParametersForecasting:
@@ -82,22 +83,22 @@ class CombinedParametersForecasting:
         self.outputIndex = outputIndex
         # convert series to supervised learning
 
-    def CreateCombinedModel(self):
-        list = ['20200726221917', '20200726140302', '20200726114513', '20200726051814', '20200726064251']
-        Dir = 'D:\\My Research Results\\Dr_Mosaad_Data3\\Models\\'
-        models = []
-        for f in list:
-            fn = f + '_best_model.h5'
-            funModel = load_model(Dir + fn)
-            models.append(funModel)
+    def  CreateCombinedModel(self):
+        # list = ['20200726221917', '20200726140302', '20200726114513', '20200726051814', '20200726064251']
+        # Dir = os.path.dirname(os.path.abspath(__file__))+'\\Models\\'
+        # models = []
+        # for f in list:
+        #     fn = f + '_best_model.h5'
+        #     funModel = load_model(Dir + fn)
+        #     models.append(funModel)
 
         input_layer = keras.Input(shape=(7,))
 
         # merge input models
-        outModules = [f.output for f in models]
-        merge = keras.layers.concatenate(outModules)
+        # outModules = [f.output for f in models]
+        # merge = keras.layers.concatenate(outModules)
 
-        layer_pre=merge
+        # layer_pre=merge
         i=1
         for n in self.parameters["ANN_arch"]:
             if n != 0:
@@ -114,9 +115,9 @@ class CombinedParametersForecasting:
 
 
 
-        model = keras.Model(inputs=[f.input for f in models], outputs=output)
+        model = keras.Model(inputs=input_layer, outputs=output)
         # summarize layers
-        plot_model(model, to_file='D:\\multiple_inputsxxxxx.png')
+        # plot_model(model, to_file='D:\\multiple_inputsxxxxx.png')
         return model
 
     def mean_absolute_percentage_error(self, y_true, y_pred):
@@ -152,7 +153,7 @@ class CombinedParametersForecasting:
 
     def plotting_save_experiment_data(self, model, history, inputs, y_actual, y_predicted):
         # plot history
-        plot_model(model, to_file=mainDir + 'experimentOutput\\' + self.parameters["ID"] + 'model_fig.png'
+        plot_model(model, to_file=mainDir + '\\experimentOutput\\' + self.parameters["ID"] + 'model_fig.png'
                    , show_shapes=False, show_layer_names=True,
                    rankdir='TB', expand_nested=False, dpi=96)
         # stringlist = []
@@ -165,14 +166,14 @@ class CombinedParametersForecasting:
         print("******************************************")
         print(y_actual.shape, y_predicted.shape)
         # save data to excel file
-        writer = ExcelWriter(mainDir + 'experimentOutput\\' + self.parameters["ID"] + 'results.xlsx')
+        writer = ExcelWriter(mainDir + '\\experimentOutput\\' + self.parameters["ID"] + 'results.xlsx')
         df = DataFrame.from_dict(self.parameters, orient='index')
         df.columns = ['value']
         df.to_excel(writer, 'self.parameters')
 
 
 
-        writer = ExcelWriter(mainDir + 'experimentOutput\\' + self.parameters["ID"] + 'results.xlsx')
+        writer = ExcelWriter(mainDir + '\\experimentOutput\\' + self.parameters["ID"] + 'results.xlsx')
         df = DataFrame.from_dict(self.parameters, orient='index')
         df.columns = ['value']
         df.to_excel(writer, 'self.parameters')
@@ -199,7 +200,7 @@ class CombinedParametersForecasting:
         pyplot.plot(history.history['val_loss'], label='test_loss')
         # pyplot.plot(history.history['val_mean_absolute_percentage_error'], label='MAPE')
         pyplot.legend()
-        pyplot.savefig(mainDir + 'experimentOutput\\' + self.parameters["ID"] + "loss_fig.png")
+        pyplot.savefig(mainDir + '\\experimentOutput\\' + self.parameters["ID"] + "loss_fig.png")
         pyplot.close()
 
 
@@ -246,12 +247,12 @@ class CombinedParametersForecasting:
         pyplot.title('RMSE: %.3f' % rmse + " , " + 'MAPE: %.3f' % MAPE)
         figure = pyplot.gcf()
         figure.set_size_inches(16, 7)
-        pyplot.savefig(mainDir + 'experimentOutput\\' + self.parameters["ID"] + "forcast_fig.png")
+        pyplot.savefig(mainDir + '\\experimentOutput\\' + self.parameters["ID"] + "forcast_fig.png")
         pyplot.close()
 
         # save to database
         if self.parameters["save_to_database"]:
-            db = mysql.connector.connect(host="localhost", user="root", passwd="mansoura", db="dr_mosaad_data3")
+            db = mysql.connector.connect(host="localhost", user="root", passwd="*********", db="mydata")
             # prepare a cursor object using cursor() method
             cursor = db.cursor()
 
@@ -284,7 +285,7 @@ class CombinedParametersForecasting:
 
     def checkDataBase(self):
 
-        db = mysql.connector.connect(host="localhost", user="root", passwd="mansoura", db="dr_mosaad_data3")
+        db = mysql.connector.connect(host="localhost", user="root", passwd="*******", db="myData")
         # prepare a cursor object using cursor() method
         cursor = db.cursor()
 
@@ -320,15 +321,15 @@ class CombinedParametersForecasting:
         #############################Create The The Model########################################
         self.model = self.CreateCombinedModel()
 
-        if self.checkDataBase():
-            print("###################### already exist model")
-            return
+        # if self.checkDataBase():
+        #     print("###################### already exist model")
+        #     return
 
         self.model.compile(loss='mean_squared_error', optimizer=self.parameters["optimizer"])
         ##############################################################################
 
         # callbacks
-        mc = ModelCheckpoint(mainDir + 'Models\\' + self.parameters["ID"] + '_best_model.h5',
+        mc = ModelCheckpoint(mainDir + '\\Models\\' + self.parameters["ID"] + '_best_model.h5',
                              monitor='val_loss', mode='auto', verbose=1, save_best_only=True)
         logdir = mainDir + 'logs\\scalars\\' + self.parameters["ID"]
         print(logdir)
@@ -346,9 +347,9 @@ class CombinedParametersForecasting:
 
         self.parameters["n_epochs"] = len(history.history["loss"])
 
-        self.model.save(mainDir + 'Models\\' + self.parameters["ID"] + '_Last_model.h5')
+        self.model.save(mainDir + '\\Models\\' + self.parameters["ID"] + '_Last_model.h5')
 
-        self.model = load_model(mainDir + 'Models\\' + self.parameters["ID"] + '_best_model.h5')
+        self.model = load_model(mainDir + '\\Models\\' + self.parameters["ID"] + '_best_model.h5')
 
         # make a prediction
         y_test_predicted = self.model.predict([X_test,X_test,X_test,X_test,X_test] )
@@ -375,6 +376,6 @@ class CombinedParametersForecasting:
 
 
 
-#
-# f = CombinedParametersForecasting(n_epochs=1 , outputIndex=-1, earlystop=True, comment="Combined_Model", ANN_arch=[8,5])
-# f.start_experiment()
+if __name__ == "__main__":
+    f = CombinedParametersForecasting(n_epochs=1 , outputIndex=-1, earlystop=True, comment="Combined_Model", ANN_arch=[8,5],save_to_database=False)
+    f.start_experiment()

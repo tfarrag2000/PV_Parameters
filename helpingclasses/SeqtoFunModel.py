@@ -2,8 +2,7 @@ from tensorflow import keras
 from tensorflow.python.keras.models import load_model
 
 list=['20200717100010']
-Dir = 'D:\\My Research Results\\Dr_Mosaad_Data3\\Models\\'
-
+        Dir = os.path.dirname(os.path.abspath(__file__), 'Results\\Models\\')
 for f in list:
     fn=f + '_best_model.h5'
     seqModel = load_model(Dir + fn)

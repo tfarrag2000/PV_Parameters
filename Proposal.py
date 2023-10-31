@@ -193,7 +193,6 @@ def plotting_save_experiment_data(model, history, y_actual, y_predicted, paramet
     pyplot.plot(y_actual, label='actual')
     pyplot.plot(y_predicted, label='predicted')
     pyplot.legend()
-    pyplot
 
     # save to database
     if parameters["save_to_database"]:
